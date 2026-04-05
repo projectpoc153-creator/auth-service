@@ -1,3 +1,39 @@
+server:
+  port: 8081
+
 spring:
   application:
-    name: authService
+    name: auth-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/user
+    username: postgres
+    password: root
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/projectpoc
+
+# Optional JWT mapping
+jwt:
+  auth:
+    converter:
+      resource-id: projectpoc-keycloak
+      principal-attribute: preferred_username
+
+# Keycloak Admin (for user creation APIs)
+keycloak:
+  server-url: http://localhost:8180
+  realm: projectpoc
+  client-id: projectpoc-keycloak
+  client-secret: kkAZzgb15sY6KXWDKZ5XsxKAPnEfxFE2
+  admin-username: admin
+  admin-password: admin123
